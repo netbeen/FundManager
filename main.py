@@ -5,6 +5,7 @@ import datetime
 import time
 from GrabFundValue import grabFundValue
 from LoadData import loadPurchaseData
+from GenerateHtml import generateHtml
 
 if(__name__=='__main__'):
     currentDateString = time.strftime("%Y-%m-%d",time.localtime(time.time()))
@@ -28,3 +29,4 @@ if(__name__=='__main__'):
             fundInfoDict['unitPrice'] = currentCost / currentShare
 
         print(fundInfoDictList)
+        generateHtml(key,fundInfoDictList)

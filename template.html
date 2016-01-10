@@ -29,7 +29,7 @@
       var option = {
         title: {
           text: '成本净值对比图',
-          subtext: '%FundID%'
+          subtext: @fundID@
         },
         tooltip: {
           trigger: 'axis'
@@ -59,15 +59,16 @@
         xAxis: [{
           type: 'category',
           boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日', 'yy']
+          data: [@dates@]
         }],
         yAxis: [{
           type: 'value',
+          scale: true
         }],
         series: [{
           name: '单位净值',
           type: 'line',
-          data: [11, 11, 15, 13, 12, 13, 10, 0],
+          data: [@values@],
           markPoint: {
             data: [{
               type: 'max',
@@ -88,7 +89,7 @@
         {
           name: '持仓成本',
           type: 'line',
-          data: [1, -2, 2, 5, 3, 2, 0, 0],
+          data: [@unitPrices@],
           markPoint: {
             data: [{
               type: 'max',

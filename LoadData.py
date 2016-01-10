@@ -20,6 +20,7 @@ def loadPurchaseData():
             while line:
                 purchaseInfoDict = {}
                 line = line[:-1]
+                print('DEBUG:',line)
                 lineSplitList = line.split('\t')
                 purchaseInfoDict['dateString'] = lineSplitList[0]
                 purchaseInfoDict['totalPrice'] = float(lineSplitList[1])
