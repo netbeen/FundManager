@@ -2,12 +2,12 @@
 <head>
   <meta charset="utf-8">
   <title>
-    ECharts
+    @fundID@基金概览
   </title>
 </head>
 <body>
   <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-  <div id="main" style="height:400px">
+  <div id="unitPriceCompare" style="height:400px">
   </div>
   <!-- ECharts单文件引入 -->
   <script src="http://echarts.baidu.com/build/dist/echarts.js">
@@ -23,10 +23,10 @@
     // 使用
     require(['echarts', 'echarts/chart/line'],
     function(ec) {
-      // 基于准备好的dom，初始化echarts图表
-      var myChart = ec.init(document.getElementById('main'));
 
-      var option = {
+	  var xAxisData = [ @dates@ ];
+
+      var unitPriceCompareOption = {
         title: {
           text: '成本净值对比图',
           subtext: @fundID@
@@ -59,7 +59,7 @@
         xAxis: [{
           type: 'category',
           boundaryGap: false,
-          data: [@dates@]
+          data: xAxisData
         }],
         yAxis: [{
           type: 'value',
@@ -102,8 +102,10 @@
           }
         }]
       };
-      // 为echarts对象加载数据
-      myChart.setOption(option);
+
+      var unitPriceCompare = ec.init(document.getElementById('unitPriceCompare'));
+      unitPriceCompare.setOption(unitPriceCompareOption);
+
     });
   </script>
 </body>
