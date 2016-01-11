@@ -28,7 +28,14 @@ def generateHtml(fundIDString, fundInfoDictList):
         unitPricesReplaceString += unitPriceString+','
     unitPricesReplaceString = unitPricesReplaceString[:-1]
     htmlContent = htmlContent.replace('@unitPrices@',unitPricesReplaceString)
-   
+
+    profitRateReplaceString = ''
+    for fundInfoDict in fundInfoDictList:
+        profitRateString = '%.2f'%(fundInfoDict['profitRate']*100)
+        profitRateReplaceString += profitRateString+','
+    profitRateReplaceString = profitRateReplaceString[:-1]
+    htmlContent = htmlContent.replace('@profitRate@',profitRateReplaceString)
+
     outputFile = open('result/'+fundIDString+'.html','w')
     outputFile.write(htmlContent)
     outputFile.close()

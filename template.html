@@ -9,6 +9,9 @@
   <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
   <div id="unitPriceCompare" style="height:400px">
   </div>
+  <div id="profitRateCompare" style="height:400px">
+  </div>
+
   <!-- ECharts单文件引入 -->
   <script src="http://echarts.baidu.com/build/dist/echarts.js">
   </script>
@@ -25,6 +28,9 @@
     function(ec) {
 
 	  var xAxisData = [ @dates@ ];
+	  var fundValues = [@values@];
+	  var fundUnitPrice = [@unitPrices@];
+	  var fundProfitRate = [@profitRate@];
 
       var unitPriceCompareOption = {
         title: {
@@ -35,14 +41,11 @@
           trigger: 'axis'
         },
         legend: {
-          data: ['单位净值', '持仓成本']
+          data: ['单位净值', '持仓成本', '收益率']
         },
         toolbox: {
           show: true,
           feature: {
-            mark: {
-              show: true
-            },
             dataView: {
               show: true,
               readOnly: false
@@ -68,7 +71,7 @@
         series: [{
           name: '单位净值',
           type: 'line',
-          data: [@values@],
+          data: fundValues,
           markPoint: {
             data: [{
               type: 'max',
@@ -89,7 +92,7 @@
         {
           name: '持仓成本',
           type: 'line',
-          data: [@unitPrices@],
+          data: fundUnitPrice,
           markPoint: {
             data: [{
               type: 'max',
@@ -100,12 +103,83 @@
               name: '最小值'
             }]
           }
+        },
+		{
+		  name: '收益率',
+		  type: 'line',
+		  symbol: 'none',
+		  data: []
+		}]
+      };
+
+      var profitRateCompareOption = {
+        title: {
+          text: '利润率示意图',
+          subtext: @fundID@
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+		  y: -30,
+          data: ['单位净值','持仓成本','收益率', '年化收益率','赎回收益率','赎回年化收益率']
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        },
+        calculable: true,
+        xAxis: [{
+		  show: false,
+          type: 'category',
+          boundaryGap: false,
+          data: xAxisData
+        }],
+        yAxis: [{
+          type: 'value',
+          scale: true,
+		  axisLabel: {
+			formatter: function (v){
+				return v+'%'
+			}
+		  }
+        }],
+        series: [{
+          name: '收益率',
+          type: 'line',
+          data: fundProfitRate,
+          markPoint: {
+            data: [{
+              type: 'max',
+              name: '最大值'
+            },
+            {
+              type: 'min',
+              name: '最小值'
+            }]
+          },
         }]
       };
 
       var unitPriceCompare = ec.init(document.getElementById('unitPriceCompare'));
       unitPriceCompare.setOption(unitPriceCompareOption);
 
+	  var profitRateCompare = ec.init(document.getElementById('profitRateCompare'));
+	  profitRateCompare.setOption(profitRateCompareOption);
+	  
+	  unitPriceCompare.connect([profitRateCompare]);
+	  profitRateCompare.connect([unitPriceCompare]);
     });
   </script>
 </body>

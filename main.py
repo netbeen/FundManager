@@ -26,7 +26,10 @@ if(__name__=='__main__'):
                 currentCost += thisFundPurchaseInfoDictList[nextPurchaseInfoDictIndex]['totalPrice']
                 currentShare +=  thisFundPurchaseInfoDictList[nextPurchaseInfoDictIndex]['totalPrice']/fundInfoDict['value']
                 nextPurchaseInfoDictIndex += 1
-            fundInfoDict['unitPrice'] = currentCost / currentShare
+            fundInfoDict['unitPrice'] = currentCost / currentShare  #计算每份持仓成本
 
-        print(fundInfoDictList)
+        for fundInfoDict in fundInfoDictList:
+            fundInfoDict['profitRate'] = (fundInfoDict['value']-fundInfoDict['unitPrice']) / fundInfoDict['unitPrice']  #计算收益率
+
+        #print(fundInfoDictList)
         generateHtml(key,fundInfoDictList)
