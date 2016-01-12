@@ -6,4 +6,4 @@
 - 原理：python爬虫抓取数据+分析；echart可视化显示
 - 使用方法：在data文件夹下编辑购买记录（每个文件的文件名为基金编号，文件内部每行为日期+金额的格式），然后执行main.py。
 - 依赖：python3
-- ![1.1版本截图](http://ww1.sinaimg.cn/large/9e2d8c2djw1ezwqvxv1buj20p60nx0vp.jpg)
+- ![1.1版本截图](http://ww3.sinaimg.cn/large/9e2d8c2djw1ezwr29o8cjj20p00nqdix.jpg)
