@@ -6,6 +6,8 @@ import time
 from GrabFundValue import grabFundValue
 from LoadData import loadPurchaseData
 from GenerateHtml import generateHtml
+#import ProfitRatePerYear
+from ProfitRatePerYear import ProfitRatePerYearCalculator
 
 if(__name__=='__main__'):
     currentDateString = time.strftime("%Y-%m-%d",time.localtime(time.time()))
@@ -21,8 +23,13 @@ if(__name__=='__main__'):
         currentCost = 0
         currentShare = 0
         nextPurchaseInfoDictIndex = 0
+        #print('this fund purchase info dict list count: ',len(thisFundPurchaseInfoDictList))
         for fundInfoDict in fundInfoDictList:
-            if fundInfoDict['dateString'] == thisFundPurchaseInfoDictList[nextPurchaseInfoDictIndex]['dateString']:
+            #print('this day: ',fundInfoDict['dateString'])
+            #print('next purchase info dict index: ', nextPurchaseInfoDictIndex)
+            if nextPurchaseInfoDictIndex == len(thisFundPurchaseInfoDictList):
+                pass
+            elif fundInfoDict['dateString'] == thisFundPurchaseInfoDictList[nextPurchaseInfoDictIndex]['dateString']:
                 currentCost += thisFundPurchaseInfoDictList[nextPurchaseInfoDictIndex]['totalPrice']
                 currentShare +=  thisFundPurchaseInfoDictList[nextPurchaseInfoDictIndex]['totalPrice']/fundInfoDict['value']
                 nextPurchaseInfoDictIndex += 1
@@ -30,6 +37,28 @@ if(__name__=='__main__'):
 
         for fundInfoDict in fundInfoDictList:
             fundInfoDict['profitRate'] = (fundInfoDict['value']-fundInfoDict['unitPrice']) / fundInfoDict['unitPrice']  #计算收益率
+
+        redeemFeeRate = 0.5 / 100
+
+        nextPurchaseInfoDictIndex = 0
+        for fundInfoDict in fundInfoDictList:
+            print(fundInfoDict['dateString'])
+            untilTheDayPurchaseInfoDictList = []
+            if nextPurchaseInfoDictIndex >= len(thisFundPurchaseInfoDictList):
+                untilTheDayPurchaseInfoDictList = thisFundPurchaseInfoDictList
+            elif fundInfoDict['dateString'] == thisFundPurchaseInfoDictList[nextPurchaseInfoDictIndex]['dateString']:
+                nextPurchaseInfoDictIndex += 1
+                untilTheDayPurchaseInfoDictList = thisFundPurchaseInfoDictList[0:nextPurchaseInfoDictIndex]
+            else:
+                untilTheDayPurchaseInfoDictList = thisFundPurchaseInfoDictList[0:nextPurchaseInfoDictIndex]
+            calculator = ProfitRatePerYearCalculator(untilTheDayPurchaseInfoDictList)
+            
+            currentCost = 0
+            for i in range(0,nextPurchaseInfoDictIndex):
+                currentCost += thisFundPurchaseInfoDictList[i]['totalPrice']
+            currentProfitAddCost = (fundInfoDict['profitRate'] - redeemFeeRate) * currentCost + currentCost
+            print(currentProfitAddCost)
+            fundInfoDict['profitRatePerYear'] =  calculator.calc(currentProfitAddCost,fundInfoDict['dateString'])
 
         #print(fundInfoDictList)
         generateHtml(key,fundInfoDictList)

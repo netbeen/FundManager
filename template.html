@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
   <title>
     @fundID@基金概览
-  </title>
-</head>
-<body>
-  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-  <div id="unitPriceCompare" style="height:400px">
-  </div>
-  <div id="profitRateCompare" style="height:400px">
-  </div>
-
-  <!-- ECharts单文件引入 -->
-  <script src="http://echarts.baidu.com/build/dist/echarts.js">
-  </script>
+  </title> 
+ </head> 
+ <body> 
+  <!-- 为ECharts准备一个具备大小（宽高）的Dom --> 
+  <div id="unitPriceCompare" style="height:400px"> 
+  </div> 
+  <div id="profitRateCompare" style="height:400px"> 
+  </div> 
+  <!-- ECharts单文件引入 --> 
+  <script src="../echart-build-dist/echarts.js">
+  </script> 
   <script type="text/javascript">
     // 路径配置
     require.config({
       paths: {
-        echarts: 'http://echarts.baidu.com/build/dist'
+        echarts: '../echart-build-dist'
       }
     });
 
@@ -31,6 +31,7 @@
 	  var fundValues = [@values@];
 	  var fundUnitPrice = [@unitPrices@];
 	  var fundProfitRate = [@profitRate@];
+	  var fundProfitRatePerYear = [@profitRatePerYear@];
 
       var unitPriceCompareOption = {
         title: {
@@ -41,7 +42,7 @@
           trigger: 'axis'
         },
         legend: {
-          data: ['单位净值', '持仓成本', '收益率']
+          data: ['单位净值', '持仓成本', '收益率%', '赎回年化收益率%']
         },
         toolbox: {
           show: true,
@@ -105,7 +106,13 @@
           }
         },
 		{
-		  name: '收益率',
+		  name: '收益率%',
+		  type: 'line',
+		  symbol: 'none',
+		  data: []
+		},
+		{
+		  name: '赎回年化收益率%',
 		  type: 'line',
 		  symbol: 'none',
 		  data: []
@@ -114,7 +121,7 @@
 
       var profitRateCompareOption = {
         title: {
-          text: '利润率示意图',
+          text: '收益率示意图',
           subtext: @fundID@
         },
         tooltip: {
@@ -122,7 +129,7 @@
         },
         legend: {
 		  y: -30,
-          data: ['单位净值','持仓成本','收益率', '年化收益率','赎回收益率','赎回年化收益率']
+          data: ['单位净值','持仓成本','收益率%', '赎回年化收益率%']
         },
         toolbox: {
           show: true,
@@ -154,9 +161,19 @@
 				return v+'%'
 			}
 		  }
-        }],
+		},
+		{
+		  type: 'value',
+		  scale: true,
+		  axisLabel: {
+			formatter: function(v){
+				return v+'%'
+			}
+		  },
+		  position: 'right'
+		}],
         series: [{
-          name: '收益率',
+          name: '收益率%',
           type: 'line',
           data: fundProfitRate,
           markPoint: {
@@ -169,7 +186,24 @@
               name: '最小值'
             }]
           },
-        }]
+        },
+		{
+          name: '赎回年化收益率%',
+		  yAxisIndex: 1,
+          type: 'line',
+          data: fundProfitRatePerYear,
+          markPoint: {
+            data: [{
+              type: 'max',
+              name: '最大值'
+            },
+            {
+              type: 'min',
+              name: '最小值'
+            }]
+          },
+        }
+		]
       };
 
       var unitPriceCompare = ec.init(document.getElementById('unitPriceCompare'));
@@ -181,5 +215,6 @@
 	  unitPriceCompare.connect([profitRateCompare]);
 	  profitRateCompare.connect([unitPriceCompare]);
     });
-  </script>
-</body>
+  </script> 
+ </body>
+</html>

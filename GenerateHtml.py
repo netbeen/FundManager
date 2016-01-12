@@ -35,7 +35,14 @@ def generateHtml(fundIDString, fundInfoDictList):
         profitRateReplaceString += profitRateString+','
     profitRateReplaceString = profitRateReplaceString[:-1]
     htmlContent = htmlContent.replace('@profitRate@',profitRateReplaceString)
-
+    
+    profitRatePerYearReplaceString = ''
+    for fundInfoDict in fundInfoDictList:
+        profitRatePerYearString = '%.2f'%(fundInfoDict['profitRatePerYear']*100)
+        profitRatePerYearReplaceString += profitRatePerYearString+','
+    profitRatePerYearReplaceString = profitRatePerYearReplaceString[:-1]
+    htmlContent = htmlContent.replace('@profitRatePerYear@',profitRatePerYearReplaceString)
+    
     outputFile = open('result/'+fundIDString+'.html','w')
     outputFile.write(htmlContent)
     outputFile.close()
