@@ -10,9 +10,11 @@
   
   <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="unitPriceCompare" style="height:400px">
+    <div id="unitPriceCompare" style="height:300px">
     </div>
-    <div id="profitRateCompare" style="height:400px">
+    <div id="profitRateCompare" style="height:300px">
+    </div>
+    <div id="profitRatePerYearCompare" style="height:300px">
     </div>
     <!-- ECharts单文件引入 -->
     <script src="../echarts-dist/echarts.min.js">
@@ -33,7 +35,7 @@
           trigger: 'axis'
         },
         legend: {
-          data: ['单位净值', '持仓成本', '收益率%', '赎回年化收益率%']
+          data: ['单位净值', '持仓成本']
         },
         toolbox: {
           show: true,
@@ -99,22 +101,11 @@ symbolSize: 60,
               name: '最小值'
             }]
           }
-        },
-        {
-          name: '收益率%',
-          type: 'line',
-          symbol: 'none',
-          data: []
-        },
-        {
-          name: '赎回年化收益率%',
-          type: 'line',
-          symbol: 'none',
-          data: []
         }]
       };
 
       var profitRateCompareOption = {
+color: ['#61a0a8'],
         title: {
           text: '收益率示意图',
           subtext: @fundID@
@@ -123,8 +114,7 @@ symbolSize: 60,
           trigger: 'axis'
         },
         legend: {
-          y: -30,
-          data: ['单位净值', '持仓成本', '收益率%', '赎回年化收益率%']
+          data: ['收益率%']
         },
         toolbox: {
           show: true,
@@ -156,16 +146,6 @@ symbolSize: 60,
               return v + '%'
             }
           }
-        },
-        {
-          type: 'value',
-          scale: true,
-          axisLabel: {
-            formatter: function(v) {
-              return v + '%'
-            }
-          },
-          position: 'right'
         }],
         series: [{
           name: '收益率%',
@@ -183,10 +163,56 @@ symbolSize: 60,
               name: '最小值'
             }]
           },
+        }]
+      };
+
+
+var profitRatePerYearCompareOption = {
+color: ['#dd8668'],
+        title: {
+          text: '年化收益率示意图',
+          subtext: @fundID@
         },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['赎回年化收益率%']
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        },
+        calculable: true,
+        xAxis: [{
+          show: false,
+          type: 'category',
+          boundaryGap: ['20%', '20%'],
+          data: xAxisData
+        }],
+        yAxis: [{
+          type: 'value',
+          scale: true,
+          axisLabel: {
+            formatter: function(v) {
+              return v + '%'
+            }
+          }
+        }],
+        series: [
         {
           name: '赎回年化收益率%',
-          yAxisIndex: 1,
           type: 'line',
           data: fundProfitRatePerYear,
           markPoint: {
@@ -210,7 +236,10 @@ symbolSize: 60,
       var profitRateCompare = echarts.init(document.getElementById('profitRateCompare'));
       profitRateCompare.setOption(profitRateCompareOption);
 
-echarts.connect([unitPriceCompare,profitRateCompare]);
+var profitRateComparePerYear = echarts.init(document.getElementById('profitRatePerYearCompare'));
+      profitRateComparePerYear.setOption(profitRatePerYearCompareOption);
+
+echarts.connect([unitPriceCompare,profitRateCompare,profitRateComparePerYear]);
     </script>
   </body>
 
