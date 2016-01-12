@@ -7,40 +7,42 @@ def generateHtml(fundIDString, fundInfoDictList):
     templateFile = open('template.html')
     htmlContent = templateFile.read()
 
-    fundIDIndex = htmlContent.index('@fundID@')
-    htmlContent = htmlContent[:fundIDIndex] + '\''+ fundIDString + '\'' + htmlContent[fundIDIndex+8:]
+    htmlContent = htmlContent.replace('@fundID@',fundIDString)
 
-    datesIndex = htmlContent.index('@dates@')
-    swapHtmlContent = htmlContent[:datesIndex]
+    datesReplaceString = ''
     for fundInfoDict in fundInfoDictList:
-        swapHtmlContent += '\'' + fundInfoDict['dateString']  + '\','
-    swapHtmlContent = swapHtmlContent[:-1]
-    swapHtmlContent += htmlContent[datesIndex+7:]
-    htmlContent = swapHtmlContent
+        datesReplaceString += '\'' + fundInfoDict['dateString']  + '\','
+    datesReplaceString = datesReplaceString[:-1]
+    htmlContent = htmlContent.replace('@dates@',datesReplaceString)
 
-    valuesIndex = htmlContent.index('@values@')
-    swapHtmlContent = htmlContent[:valuesIndex]
+    valuesReplaceString = ''
     for fundInfoDict in fundInfoDictList:
         valueString = '%.4f'%fundInfoDict['value']
-        swapHtmlContent += valueString+','
-    swapHtmlContent = swapHtmlContent[:-1]
-    swapHtmlContent += htmlContent[valuesIndex+8:]
-    htmlContent = swapHtmlContent
+        valuesReplaceString += valueString+','
+    valuesReplaceString = valuesReplaceString[:-1]
+    htmlContent = htmlContent.replace('@values@',valuesReplaceString)
 
-
-    unitPricesIndex = htmlContent.index('@unitPrices@')
-    swapHtmlContent = htmlContent[:unitPricesIndex]
+    unitPricesReplaceString = ''
     for fundInfoDict in fundInfoDictList:
         unitPriceString = '%.4f'%fundInfoDict['unitPrice']
-        swapHtmlContent += unitPriceString+','
-    swapHtmlContent = swapHtmlContent[:-1]
-    swapHtmlContent += htmlContent[unitPricesIndex+12:]
-    htmlContent = swapHtmlContent
-   
+        unitPricesReplaceString += unitPriceString+','
+    unitPricesReplaceString = unitPricesReplaceString[:-1]
+    htmlContent = htmlContent.replace('@unitPrices@',unitPricesReplaceString)
+
+    profitRateReplaceString = ''
+    for fundInfoDict in fundInfoDictList:
+        profitRateString = '%.2f'%(fundInfoDict['profitRate']*100)
+        profitRateReplaceString += profitRateString+','
+    profitRateReplaceString = profitRateReplaceString[:-1]
+    htmlContent = htmlContent.replace('@profitRate@',profitRateReplaceString)
     
-    print(htmlContent)
+    profitRatePerYearReplaceString = ''
+    for fundInfoDict in fundInfoDictList:
+        profitRatePerYearString = '%.2f'%(fundInfoDict['profitRatePerYear']*100)
+        profitRatePerYearReplaceString += profitRatePerYearString+','
+    profitRatePerYearReplaceString = profitRatePerYearReplaceString[:-1]
+    htmlContent = htmlContent.replace('@profitRatePerYear@',profitRatePerYearReplaceString)
     
     outputFile = open('result/'+fundIDString+'.html','w')
     outputFile.write(htmlContent)
     outputFile.close()
-
