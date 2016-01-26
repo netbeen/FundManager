@@ -55,5 +55,7 @@ if(__name__=='__main__'):
             currentProfitAddCost = (fundInfoDict['profitRate'] - redeemFeeRate) * currentCost + currentCost
             fundInfoDict['profitRatePerYear'] =  calculator.calc(currentProfitAddCost,fundInfoDict['dateString'])
 
-        #print(fundInfoDictList)
-        generateHtml(key,fundInfoDictList)
+        print('总成本：',currentCost)
+        print('利润率：',fundInfoDictList[-1]['profitRate'],'%')
+        #generateHtml(key,fundInfoDictList)
+        generateHtml(key,currentCost,fundInfoDictList[-1]['profitRate'],fundInfoDictList)
