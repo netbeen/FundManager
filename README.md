@@ -1,4 +1,6 @@
 # FundManager 基金定投统计工具
+https://travis-ci.org/netbeen/FundManager.svg?branch=master
+[![buildPass](https://travis-ci.org/netbeen/FundManager.svg?branch=master)](https://travis-ci.org/netbeen/FundManager.svg?branch=master)
 [![Licence](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 - 功能：查看基金收益率以及年化收益率
 - 输入：各个基金的购买记录（基金编号+日期+金额）
