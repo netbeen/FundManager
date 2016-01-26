@@ -3,11 +3,17 @@
 
 import os
 
-def generateHtml(fundIDString, fundInfoDictList):
+def generateHtml(fundIDString, totalCost, profitRate, fundInfoDictList):
     templateFile = open('template.html')
     htmlContent = templateFile.read()
 
     htmlContent = htmlContent.replace('@fundID@',fundIDString)
+
+    htmlContent = htmlContent.replace('@totalCost@','%.2f'%totalCost)
+
+    htmlContent = htmlContent.replace('@currentProfitRate@','%.2f'%(profitRate*100))
+
+    htmlContent = htmlContent.replace('@totalValue@','%.2f'%(totalCost*(profitRate+1)))
 
     datesReplaceString = ''
     for fundInfoDict in fundInfoDictList:
