@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      160119基金概览
+    </title>
+  </head>
+  
+  <body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="unitPriceCompare" style="height:300px">
+    </div>
+    <div id="profitRateCompare" style="height:300px">
+    </div>
+    <div id="profitRatePerYearCompare" style="height:300px">
+    </div>
+	<div>
+		本基金总成本：400.00元，总市值：350.08元，利润率：-12.48%
+	</div>
+    <!-- ECharts单文件引入 -->
+    <script src="../echarts-dist/echarts.min.js">
+    </script>
+    <script type="text/javascript">
+      var xAxisData = ['2015-12-08','2015-12-09','2015-12-10','2015-12-11','2015-12-14','2015-12-15','2015-12-16','2015-12-17','2015-12-18','2015-12-21','2015-12-22','2015-12-23','2015-12-24','2015-12-25','2015-12-28','2015-12-29','2015-12-30','2015-12-31','2016-01-04','2016-01-05','2016-01-06','2016-01-07','2016-01-08','2016-01-11','2016-01-12','2016-01-13','2016-01-14','2016-01-15','2016-01-18','2016-01-19','2016-01-20','2016-01-21','2016-01-22','2016-01-25'];
+      var fundValues = [1.7550,1.7486,1.7437,1.7309,1.7649,1.7780,1.7849,1.8270,1.8231,1.8434,1.8588,1.8401,1.8354,1.8443,1.8020,1.8180,1.8329,1.8055,1.6630,1.6413,1.6811,1.5436,1.5681,1.4661,1.4680,1.4189,1.4652,1.4120,1.4320,1.4821,1.4686,1.4133,1.4355,1.4496];
+      var fundUnitPrice = [1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.7550,1.6563,1.6563,1.6563,1.6563,1.6563,1.6563,1.6563,1.6563,1.6563,1.6563,1.6563,1.6563];
+      var fundProfitRate = [0.00,-0.36,-0.64,-1.37,0.56,1.31,1.70,4.10,3.88,5.04,5.91,4.85,4.58,5.09,2.68,3.59,4.44,2.88,-5.24,-6.48,-4.21,-12.05,-5.32,-11.48,-11.37,-14.33,-11.54,-14.75,-13.54,-10.52,-11.33,-14.67,-13.33,-12.48];
+      var fundProfitRatePerYear = [-182.57,-315.60,-209.32,-229.34,3.91,42.12,54.63,143.82,121.55,124.79,137.73,103.74,91.37,96.45,39.34,52.93,64.15,37.31,-79.86,-94.18,-60.69,-162.73,-140.45,-263.27,-245.90,-299.07,-224.82,-278.77,-222.31,-163.75,-170.23,-215.46,-187.64,-158.34];
+
+      var unitPriceCompareOption = {
+        title: {
+          text: '成本净值对比图',
+          subtext: 160119
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['单位净值', '持仓成本']
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        },
+        calculable: true,
+        xAxis: [{
+          type: 'category',
+          boundaryGap: ['20%', '20%'],
+          data: xAxisData
+        }],
+        yAxis: [{
+          type: 'value',
+          scale: true
+        }],
+        series: [{
+          name: '单位净值',
+          type: 'line',
+          data: fundValues,
+          markPoint: {
+            data: [{
+symbolSize: 60,
+              type: 'max',
+              name: '最大值'
+            },
+            {
+symbolSize: 60,
+              type: 'min',
+              name: '最小值'
+            }]
+          },
+          markLine: {
+            data: [{
+              type: 'average',
+              name: '平均值'
+            }]
+          }
+        },
+        {
+          name: '持仓成本',
+          type: 'line',
+          data: fundUnitPrice,
+          markPoint: {
+            data: [{
+symbolSize: 60,
+              type: 'max',
+              name: '最大值'
+            },
+            {
+symbolSize: 60,
+              type: 'min',
+              name: '最小值'
+            }]
+          }
+        }]
+      };
+
+      var profitRateCompareOption = {
+color: ['#61a0a8'],
+        title: {
+          text: '收益率示意图',
+          subtext: 160119
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['收益率%']
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        },
+        calculable: true,
+        xAxis: [{
+          show: false,
+          type: 'category',
+          boundaryGap: ['20%', '20%'],
+          data: xAxisData
+        }],
+        yAxis: [{
+          type: 'value',
+          scale: true,
+          axisLabel: {
+            formatter: function(v) {
+              return v + '%'
+            }
+          }
+        }],
+        series: [{
+          name: '收益率%',
+          type: 'line',
+          data: fundProfitRate,
+          markPoint: {
+            data: [{
+symbolSize: 60,
+              type: 'max',
+              name: '最大值'
+            },
+            {
+symbolSize: 60,
+              type: 'min',
+              name: '最小值'
+            }]
+          },
+        }]
+      };
+
+
+var profitRatePerYearCompareOption = {
+color: ['#dd8668'],
+        title: {
+          text: '年化收益率示意图',
+          subtext: 160119
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['赎回年化收益率%']
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        },
+        calculable: true,
+        xAxis: [{
+          show: false,
+          type: 'category',
+          boundaryGap: ['20%', '20%'],
+          data: xAxisData
+        }],
+        yAxis: [{
+          type: 'value',
+          scale: true,
+          axisLabel: {
+            formatter: function(v) {
+              return v + '%'
+            }
+          }
+        }],
+        series: [
+        {
+          name: '赎回年化收益率%',
+          type: 'line',
+          data: fundProfitRatePerYear,
+          markPoint: {
+            data: [{
+symbolSize: 60,
+              type: 'max',
+              name: '最大值'
+            },
+            {
+              type: 'min',
+symbolSize: 60,
+              name: '最小值'
+            }]
+          },
+        }]
+      };
+
+      var unitPriceCompare = echarts.init(document.getElementById('unitPriceCompare'));
+      unitPriceCompare.setOption(unitPriceCompareOption);
+
+      var profitRateCompare = echarts.init(document.getElementById('profitRateCompare'));
+      profitRateCompare.setOption(profitRateCompareOption);
+
+var profitRateComparePerYear = echarts.init(document.getElementById('profitRatePerYearCompare'));
+      profitRateComparePerYear.setOption(profitRatePerYearCompareOption);
+
+echarts.connect([unitPriceCompare,profitRateCompare,profitRateComparePerYear]);
+    </script>
+  </body>
+
+</html>
