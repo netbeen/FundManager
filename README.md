@@ -1,4 +1,5 @@
 # FundManager 基金定投统计工具
+[![Licence](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 - 功能：查看基金收益率以及年化收益率
 - 输入：各个基金的购买记录（基金编号+日期+金额）
 - 输出：基金的净值、每份成本、总收益率、年化收益率
