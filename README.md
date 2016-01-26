@@ -10,6 +10,7 @@
 # 版本截图存档
 ## v1.2.0
 ![1.2版本截图](http://ww2.sinaimg.cn/large/9e2d8c2djw1f0cvi4efu2j20p50ppdjh.jpg)
+![1.1版本截图](http://ww3.sinaimg.cn/large/9e2d8c2djw1ezwr29o8cjj20p00nqdix.jpg)
 
 ## v1.1.0
 ![1.1版本截图](http://ww3.sinaimg.cn/large/9e2d8c2djw1ezwr29o8cjj20p00nqdix.jpg)
