@@ -154,6 +154,16 @@ color: ['#61a0a8'],
           name: '收益率%',
           type: 'line',
           data: fundProfitRate,
+		  markLine: {
+			data:[
+			[{
+			  name: '0%收益率线',
+			  coord: [xAxisData[0],0]
+			},{
+			  coord: [xAxisData[xAxisData.length-1],0]
+			}
+		  ]]
+		  },
           markPoint: {
             data: [{
 symbolSize: 60,
@@ -218,6 +228,17 @@ color: ['#dd8668'],
           name: '赎回年化收益率%',
           type: 'line',
           data: fundProfitRatePerYear,
+		  markLine: {
+			data:[
+			[{
+			  name: '0%收益率线',
+			  coord: [xAxisData[0],0]
+			},{
+			  coord: [xAxisData[xAxisData.length-1],0]
+			}
+		  ]]
+		  },
+
           markPoint: {
             data: [{
 symbolSize: 60,
