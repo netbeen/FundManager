@@ -17,7 +17,7 @@ class ProfitRatePerYearCalculator(object):
                purchaseInfoDict['duration'] = 1
            else:
                purchaseInfoDict['duration'] = duration
-        result =(self.binarySearch(purrentProfitAddCost,0,100)-1)*365
+        result =(self.binarySearch(purrentProfitAddCost,0,10)-1)*365
         return result
 
     def binarySearch(self, target, lowValue, highValue):
