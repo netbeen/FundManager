@@ -5,7 +5,7 @@ import math
 class ProfitRatePerYearCalculator(object):
     
     def __init__(self, purchaseInfoDictList):
-        print('年化利率计算器初始化：至此该基金有',len( purchaseInfoDictList ),'条购买信息')
+        #print('年化利率计算器初始化：至此该基金有',len( purchaseInfoDictList ),'条购买信息')
         self.purchaseInfoDictList = purchaseInfoDictList
 
     def calc(self, purrentProfitAddCost, redeemDateString):

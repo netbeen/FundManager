@@ -42,5 +42,5 @@ def grabFundValue(fundIDString, startDateStr):
     if startDateIndex == -1:
         print('错误：未找到与data文件起始日期相符的净值信息！')
 
-    print("抓取基金净值结束")
+    #print("抓取基金净值结束")
     return fundInfoDictList[startDateIndex:]

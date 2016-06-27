@@ -15,6 +15,7 @@ if(__name__=='__main__'):
     purchaseInfoDictListDict = loadPurchaseData()
 
     for (key,value) in purchaseInfoDictListDict.items():
+        print('-------------------------')
         print('开始处理',key)
         fundInfoDictList = grabFundValue(key,value[0]['dateString'])
         
@@ -37,8 +38,10 @@ if(__name__=='__main__'):
         redeemFeeRate = 0.5 / 100
 
         nextPurchaseInfoDictIndex = 0
+        currentDateString = ""
         for fundInfoDict in fundInfoDictList:
-            print(fundInfoDict['dateString'])
+            #print(fundInfoDict['dateString'])
+            currentDateString = fundInfoDict['dateString']
             untilTheDayPurchaseInfoDictList = []
             if nextPurchaseInfoDictIndex >= len(thisFundPurchaseInfoDictList):
                 untilTheDayPurchaseInfoDictList = thisFundPurchaseInfoDictList
@@ -55,6 +58,7 @@ if(__name__=='__main__'):
             currentProfitAddCost = (fundInfoDict['profitRate'] - redeemFeeRate) * currentCost + currentCost
             fundInfoDict['profitRatePerYear'] =  calculator.calc(currentProfitAddCost,fundInfoDict['dateString'])
 
+        print('结束时间：',currentDateString)
         print('总成本：',currentCost)
         print('利润率：',fundInfoDictList[-1]['profitRate'],'%')
         #generateHtml(key,fundInfoDictList)
