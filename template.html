@@ -1,270 +1,270 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
     <title>
-      @fundID@基金概览
+        ${fundID}基金概览
     </title>
-  </head>
+</head>
 
-  <body>
-    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="unitPriceCompare" style="height:300px">
-    </div>
-    <div id="profitRateCompare" style="height:300px">
-    </div>
-    <div id="profitRatePerYearCompare" style="height:300px">
-    </div>
-	<div>
-		本基金总成本：@totalCost@元，总市值：@totalValue@元，利润率：@currentProfitRate@%
-	</div>
-    <!-- ECharts单文件引入 -->
-    <script src="../echarts-dist/echarts.min.js">
-    </script>
-    <script type="text/javascript">
-      var xAxisData = [@dates@];
-      var fundValues = [@values@];
-      var fundUnitPrice = [@unitPrices@];
-      var fundProfitRate = [@profitRate@];
-      var fundProfitRatePerYear = [@profitRatePerYear@];
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="unitPriceCompare" style="height:300px">
+</div>
+<div id="profitRateCompare" style="height:300px">
+</div>
+<div id="profitRatePerYearCompare" style="height:300px">
+</div>
+<div>
+    本基金总成本：${totalCost}元，总市值：${totalValue}元，利润率：${currentProfitRate}%
+</div>
+<!-- ECharts单文件引入 -->
+<script src="../echarts-dist/echarts.min.js">
+</script>
+<script type="text/javascript">
+    var xAxisData = [${dates}];
+    var fundValues = [${values}];
+    var fundUnitPrice = [${unitPrices}];
+    var fundProfitRate = [${profitRate}];
+    var fundProfitRatePerYear = [${profitRatePerYear}];
 
-      var unitPriceCompareOption = {
+    var unitPriceCompareOption = {
         title: {
-          text: '成本净值对比图',
-          subtext: @fundID@
+            text: '成本净值对比图',
+            subtext: ${fundID}
         },
         tooltip: {
-          trigger: 'axis'
+            trigger: 'axis'
         },
         legend: {
-          data: ['单位净值', '持仓成本']
+            data: ['单位净值', '持仓成本']
         },
         toolbox: {
-          show: true,
-          feature: {
-            dataView: {
-              show: true,
-              readOnly: false
-            },
-            restore: {
-              show: true
-            },
-            saveAsImage: {
-              show: true
+            show: true,
+            feature: {
+                dataView: {
+                    show: true,
+                    readOnly: false
+                },
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    show: true
+                }
             }
-          }
         },
         calculable: true,
         xAxis: [{
-          type: 'category',
-          boundaryGap: ['20%', '20%'],
-          data: xAxisData
+            type: 'category',
+            boundaryGap: ['20%', '20%'],
+            data: xAxisData
         }],
         yAxis: [{
-          type: 'value',
-          scale: true
+            type: 'value',
+            scale: true
         }],
         series: [{
-          name: '单位净值',
-          type: 'line',
-          data: fundValues,
-          markPoint: {
-            data: [{
-symbolSize: 60,
-              type: 'max',
-              name: '最大值'
+            name: '单位净值',
+            type: 'line',
+            data: fundValues,
+            markPoint: {
+                data: [{
+                    symbolSize: 60,
+                    type: 'max',
+                    name: '最大值'
+                },
+                    {
+                        symbolSize: 60,
+                        type: 'min',
+                        name: '最小值'
+                    }]
             },
-            {
-symbolSize: 60,
-              type: 'min',
-              name: '最小值'
-            }]
-          },
-          markLine: {
-            data: [{
-              type: 'average',
-              name: '平均值'
-            }]
-          }
+            markLine: {
+                data: [{
+                    type: 'average',
+                    name: '平均值'
+                }]
+            }
         },
-        {
-          name: '持仓成本',
-          type: 'line',
-          data: fundUnitPrice,
-          markPoint: {
-            data: [{
-symbolSize: 60,
-              type: 'max',
-              name: '最大值'
-            },
             {
-symbolSize: 60,
-              type: 'min',
-              name: '最小值'
+                name: '持仓成本',
+                type: 'line',
+                data: fundUnitPrice,
+                markPoint: {
+                    data: [{
+                        symbolSize: 60,
+                        type: 'max',
+                        name: '最大值'
+                    },
+                        {
+                            symbolSize: 60,
+                            type: 'min',
+                            name: '最小值'
+                        }]
+                }
             }]
-          }
-        }]
-      };
+    };
 
-      var profitRateCompareOption = {
-color: ['#61a0a8'],
+    var profitRateCompareOption = {
+        color: ['#61a0a8'],
         title: {
-          text: '收益率示意图',
-          subtext: @fundID@
+            text: '收益率示意图',
+            subtext: ${fundID}
         },
         tooltip: {
-          trigger: 'axis'
+            trigger: 'axis'
         },
         legend: {
-          data: ['收益率%']
+            data: ['收益率%']
         },
         toolbox: {
-          show: true,
-          feature: {
-            dataView: {
-              show: true,
-              readOnly: false
-            },
-            restore: {
-              show: true
-            },
-            saveAsImage: {
-              show: true
+            show: true,
+            feature: {
+                dataView: {
+                    show: true,
+                    readOnly: false
+                },
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    show: true
+                }
             }
-          }
         },
         calculable: true,
         xAxis: [{
-          show: false,
-          type: 'category',
-          boundaryGap: ['20%', '20%'],
-          data: xAxisData
+            show: false,
+            type: 'category',
+            boundaryGap: ['20%', '20%'],
+            data: xAxisData
         }],
         yAxis: [{
-          type: 'value',
-          scale: true,
-          axisLabel: {
-            formatter: function(v) {
-              return v + '%'
+            type: 'value',
+            scale: true,
+            axisLabel: {
+                formatter: function (v) {
+                    return v + '%'
+                }
             }
-          }
         }],
         series: [{
-          name: '收益率%',
-          type: 'line',
-          data: fundProfitRate,
-		  markLine: {
-			data:[
-			[{
-			  name: '0%收益率线',
-			  coord: [xAxisData[0],0]
-			},{
-			  coord: [xAxisData[xAxisData.length-1],0]
-			}
-		  ]]
-		  },
-          markPoint: {
-            data: [{
-symbolSize: 60,
-              type: 'max',
-              name: '最大值'
+            name: '收益率%',
+            type: 'line',
+            data: fundProfitRate,
+            markLine: {
+                data: [
+                    [{
+                        name: '0%收益率线',
+                        coord: [xAxisData[0], 0]
+                    }, {
+                        coord: [xAxisData[xAxisData.length - 1], 0]
+                    }
+                    ]]
             },
-            {
-symbolSize: 60,
-              type: 'min',
-              name: '最小值'
-            }]
-          },
+            markPoint: {
+                data: [{
+                    symbolSize: 60,
+                    type: 'max',
+                    name: '最大值'
+                },
+                    {
+                        symbolSize: 60,
+                        type: 'min',
+                        name: '最小值'
+                    }]
+            },
         }]
-      };
+    };
 
 
-var profitRatePerYearCompareOption = {
-color: ['#dd8668'],
+    var profitRatePerYearCompareOption = {
+        color: ['#dd8668'],
         title: {
-          text: '年化收益率示意图',
-          subtext: @fundID@
+            text: '年化收益率示意图',
+            subtext: ${fundID}
         },
         tooltip: {
-          trigger: 'axis'
+            trigger: 'axis'
         },
         legend: {
-          data: ['赎回年化收益率%']
+            data: ['赎回年化收益率%']
         },
         toolbox: {
-          show: true,
-          feature: {
-            dataView: {
-              show: true,
-              readOnly: false
-            },
-            restore: {
-              show: true
-            },
-            saveAsImage: {
-              show: true
+            show: true,
+            feature: {
+                dataView: {
+                    show: true,
+                    readOnly: false
+                },
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    show: true
+                }
             }
-          }
         },
         calculable: true,
         xAxis: [{
-          show: false,
-          type: 'category',
-          boundaryGap: ['20%', '20%'],
-          data: xAxisData
+            show: false,
+            type: 'category',
+            boundaryGap: ['20%', '20%'],
+            data: xAxisData
         }],
         yAxis: [{
-          type: 'value',
-          scale: true,
-          axisLabel: {
-            formatter: function(v) {
-              return v + '%'
+            type: 'value',
+            scale: true,
+            axisLabel: {
+                formatter: function (v) {
+                    return v + '%'
+                }
             }
-          }
         }],
         series: [
-        {
-          name: '赎回年化收益率%',
-          type: 'line',
-          data: fundProfitRatePerYear,
-		  markLine: {
-			data:[
-			[{
-			  name: '0%收益率线',
-			  coord: [xAxisData[0],0]
-			},{
-			  coord: [xAxisData[xAxisData.length-1],0]
-			}
-		  ]]
-		  },
-
-          markPoint: {
-            data: [{
-symbolSize: 60,
-              type: 'max',
-              name: '最大值'
-            },
             {
-              type: 'min',
-symbolSize: 60,
-              name: '最小值'
+                name: '赎回年化收益率%',
+                type: 'line',
+                data: fundProfitRatePerYear,
+                markLine: {
+                    data: [
+                        [{
+                            name: '0%收益率线',
+                            coord: [xAxisData[0], 0]
+                        }, {
+                            coord: [xAxisData[xAxisData.length - 1], 0]
+                        }
+                        ]]
+                },
+
+                markPoint: {
+                    data: [{
+                        symbolSize: 60,
+                        type: 'max',
+                        name: '最大值'
+                    },
+                        {
+                            type: 'min',
+                            symbolSize: 60,
+                            name: '最小值'
+                        }]
+                },
             }]
-          },
-        }]
-      };
+    };
 
-      var unitPriceCompare = echarts.init(document.getElementById('unitPriceCompare'));
-      unitPriceCompare.setOption(unitPriceCompareOption);
+    var unitPriceCompare = echarts.init(document.getElementById('unitPriceCompare'));
+    unitPriceCompare.setOption(unitPriceCompareOption);
 
-      var profitRateCompare = echarts.init(document.getElementById('profitRateCompare'));
-      profitRateCompare.setOption(profitRateCompareOption);
+    var profitRateCompare = echarts.init(document.getElementById('profitRateCompare'));
+    profitRateCompare.setOption(profitRateCompareOption);
 
-var profitRateComparePerYear = echarts.init(document.getElementById('profitRatePerYearCompare'));
-      profitRateComparePerYear.setOption(profitRatePerYearCompareOption);
+    var profitRateComparePerYear = echarts.init(document.getElementById('profitRatePerYearCompare'));
+    profitRateComparePerYear.setOption(profitRatePerYearCompareOption);
 
-echarts.connect([unitPriceCompare,profitRateCompare,profitRateComparePerYear]);
-    </script>
-  </body>
+    echarts.connect([unitPriceCompare, profitRateCompare, profitRateComparePerYear]);
+</script>
+</body>
 
 </html>
