@@ -40,7 +40,6 @@ if(__name__=='__main__'):
         nextPurchaseInfoDictIndex = 0
         currentDateString = ""
         for fundInfoDict in fundInfoDictList:
-            #print(fundInfoDict['dateString'])
             currentDateString = fundInfoDict['dateString']
             untilTheDayPurchaseInfoDictList = []
             if nextPurchaseInfoDictIndex >= len(thisFundPurchaseInfoDictList):
@@ -60,6 +59,6 @@ if(__name__=='__main__'):
 
         print('结束时间：',currentDateString)
         print('总成本：',currentCost)
-        print('利润率：',fundInfoDictList[-1]['profitRate'],'%')
-        #generateHtml(key,fundInfoDictList)
+        print('利润率：',round(fundInfoDictList[-1]['profitRate']*100,4),'%')
+        print('年化收益率: ',round(fundInfoDictList[-1]['profitRatePerYear']*100,4),'%')
         generateHtml(key,currentCost,fundInfoDictList[-1]['profitRate'],fundInfoDictList)
