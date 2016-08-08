@@ -11,7 +11,7 @@ class ProfitRatePerYearCalculator(object):
         last_date = datetime.datetime.strptime(redeem_date_string, '%Y-%m-%d')
         for purchaseInfoDict in self.purchaseInfoDictList:
             this_date = datetime.datetime.strptime(purchaseInfoDict['dateString'], '%Y-%m-%d')
-            duration = last_date - this_date.days
+            duration = (last_date - this_date).days
             if duration == 0:
                 purchaseInfoDict['duration'] = 1
             else:
