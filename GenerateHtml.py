@@ -1,55 +1,53 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
 
+def generate_html(fund_id_string, total_cost, profit_rate, fund_info_dict_list):
+    template_file = open('template.html')
+    html_content = template_file.read()
 
-def generateHtml(fundIDString, totalCost, profitRate, fundInfoDictList):
-    templateFile = open('template.html')
-    htmlContent = templateFile.read()
+    html_content = html_content.replace('${fundID}', fund_id_string)
 
-    htmlContent = htmlContent.replace('${fundID}', fundIDString)
+    html_content = html_content.replace('${totalCost}', '%.2f' % total_cost)
 
-    htmlContent = htmlContent.replace('${totalCost}', '%.2f' % totalCost)
+    html_content = html_content.replace('${currentProfitRate}', '%.2f' % (profit_rate * 100))
 
-    htmlContent = htmlContent.replace('${currentProfitRate}', '%.2f' % (profitRate * 100))
+    html_content = html_content.replace('${totalValue}', '%.2f' % (total_cost * (profit_rate + 1)))
 
-    htmlContent = htmlContent.replace('${totalValue}', '%.2f' % (totalCost * (profitRate + 1)))
+    dates_replace_string = ''
+    for fundInfoDict in fund_info_dict_list:
+        dates_replace_string += '\'' + fundInfoDict['dateString'] + '\','
+    dates_replace_string = dates_replace_string[:-1]
+    html_content = html_content.replace('${dates}', dates_replace_string)
 
-    datesReplaceString = ''
-    for fundInfoDict in fundInfoDictList:
-        datesReplaceString += '\'' + fundInfoDict['dateString'] + '\','
-    datesReplaceString = datesReplaceString[:-1]
-    htmlContent = htmlContent.replace('${dates}', datesReplaceString)
+    values_replace_string = ''
+    for fundInfoDict in fund_info_dict_list:
+        value_string = '%.4f' % fundInfoDict['value']
+        values_replace_string += value_string + ','
+    values_replace_string = values_replace_string[:-1]
+    html_content = html_content.replace('${values}', values_replace_string)
 
-    valuesReplaceString = ''
-    for fundInfoDict in fundInfoDictList:
-        valueString = '%.4f' % fundInfoDict['value']
-        valuesReplaceString += valueString + ','
-    valuesReplaceString = valuesReplaceString[:-1]
-    htmlContent = htmlContent.replace('${values}', valuesReplaceString)
+    unit_prices_replace_string = ''
+    for fundInfoDict in fund_info_dict_list:
+        unit_price_string = '%.4f' % fundInfoDict['unitPrice']
+        unit_prices_replace_string += unit_price_string + ','
+    unit_prices_replace_string = unit_prices_replace_string[:-1]
+    html_content = html_content.replace('${unitPrices}', unit_prices_replace_string)
 
-    unitPricesReplaceString = ''
-    for fundInfoDict in fundInfoDictList:
-        unitPriceString = '%.4f' % fundInfoDict['unitPrice']
-        unitPricesReplaceString += unitPriceString + ','
-    unitPricesReplaceString = unitPricesReplaceString[:-1]
-    htmlContent = htmlContent.replace('${unitPrices}', unitPricesReplaceString)
+    profit_rate_replace_string = ''
+    for fundInfoDict in fund_info_dict_list:
+        profit_rate_string = '%.2f' % (fundInfoDict['profitRate'] * 100)
+        profit_rate_replace_string += profit_rate_string + ','
+    profit_rate_replace_string = profit_rate_replace_string[:-1]
+    html_content = html_content.replace('${profitRate}', profit_rate_replace_string)
 
-    profitRateReplaceString = ''
-    for fundInfoDict in fundInfoDictList:
-        profitRateString = '%.2f' % (fundInfoDict['profitRate'] * 100)
-        profitRateReplaceString += profitRateString + ','
-    profitRateReplaceString = profitRateReplaceString[:-1]
-    htmlContent = htmlContent.replace('${profitRate}', profitRateReplaceString)
+    profit_rate_per_year_replace_string = ''
+    for fundInfoDict in fund_info_dict_list:
+        profit_rate_per_year_string = '%.2f' % (fundInfoDict['profitRatePerYear'] * 100)
+        profit_rate_per_year_replace_string += profit_rate_per_year_string + ','
+    profit_rate_per_year_replace_string = profit_rate_per_year_replace_string[:-1]
+    html_content = html_content.replace('${profitRatePerYear}', profit_rate_per_year_replace_string)
 
-    profitRatePerYearReplaceString = ''
-    for fundInfoDict in fundInfoDictList:
-        profitRatePerYearString = '%.2f' % (fundInfoDict['profitRatePerYear'] * 100)
-        profitRatePerYearReplaceString += profitRatePerYearString + ','
-    profitRatePerYearReplaceString = profitRatePerYearReplaceString[:-1]
-    htmlContent = htmlContent.replace('${profitRatePerYear}', profitRatePerYearReplaceString)
-
-    outputFile = open('result/' + fundIDString + '.html', 'w')
-    outputFile.write(htmlContent)
-    outputFile.close()
+    output_file = open('result/' + fund_id_string + '.html', 'w')
+    output_file.write(html_content)
+    output_file.close()

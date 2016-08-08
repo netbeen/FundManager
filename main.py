@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import datetime
 import time
 from GrabFundValue import grabFundValue
-from LoadData import loadPurchaseData
-from GenerateHtml import generateHtml
+from LoadData import load_purchase_data
+from GenerateHtml import generate_html
 from ProfitRatePerYear import ProfitRatePerYearCalculator
 
 if(__name__=='__main__'):
     current_date_string = time.strftime("%Y-%m-%d", time.localtime(time.time()))
     print("当前时间：", current_date_string)
 
-    purchase_info_dict_list_dict = loadPurchaseData()
+    purchase_info_dict_list_dict = load_purchase_data()
 
-    for (key,value) in purchase_info_dict_list_dict.items():
+    for (key, value) in purchase_info_dict_list_dict.items():
         print('-------------------------')
         print('开始处理',key)
         fundInfoDictList = grabFundValue(key,value[0]['dateString'])
@@ -58,7 +57,7 @@ if(__name__=='__main__'):
             fundInfoDict['profitRatePerYear'] =  calculator.calc(currentProfitAddCost,fundInfoDict['dateString'])
 
         print('结束时间：', current_date_string)
-        print('总成本：',currentCost)
+        print('总成本：', currentCost)
         print('利润率：',round(fundInfoDictList[-1]['profitRate']*100,4),'%')
         print('年化收益率: ',round(fundInfoDictList[-1]['profitRatePerYear']*100,4),'%')
-        generateHtml(key,currentCost,fundInfoDictList[-1]['profitRate'],fundInfoDictList)
+        generate_html(key, currentCost, fundInfoDictList[-1]['profitRate'], fundInfoDictList)

@@ -4,29 +4,29 @@
 import os
 
 
-def loadPurchaseData():
-    purchaseInfoDictListDict = {}
+def load_purchase_data():
+    purchase_info_dict_list_dict = {}
 
     if os.path.isdir('data'):
-        fileList = os.listdir('data')
-        print('data文件：', fileList)
+        file_list = os.listdir('data')
+        print('data文件：', file_list)
 
-        for fileName in fileList:
-            purchaseInfoDictList = []
-            purchaseInfoDictListDict[fileName] = purchaseInfoDictList
-            fullFileName = 'data/' + fileName
-            inputFile = open(fullFileName)
-            line = inputFile.readline()
+        for fileName in file_list:
+            purchase_info_dict_list = []
+            purchase_info_dict_list_dict[fileName] = purchase_info_dict_list
+            full_file_name = 'data/' + fileName
+            input_file = open(full_file_name)
+            line = input_file.readline()
             while line:
-                purchaseInfoDict = {}
+                purchase_info_dict = {}
                 line = line[:-1]
                 print('DEBUG:', line)
-                lineSplitList = line.split('\t')
-                purchaseInfoDict['dateString'] = lineSplitList[0]
-                purchaseInfoDict['totalPrice'] = float(lineSplitList[1])
-                purchaseInfoDictList.append(purchaseInfoDict)
-                line = inputFile.readline()
-            print(purchaseInfoDictListDict)
+                line_split_list = line.split('\t')
+                purchase_info_dict['dateString'] = line_split_list[0]
+                purchase_info_dict['totalPrice'] = float(line_split_list[1])
+                purchase_info_dict_list.append(purchase_info_dict)
+                line = input_file.readline()
+            print(purchase_info_dict_list_dict)
     else:
         print('错误：data文件夹不存在！程序即将退出！')
-    return purchaseInfoDictListDict
+    return purchase_info_dict_list_dict
