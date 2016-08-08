@@ -39,7 +39,8 @@ def grabFundValue(fund_id_string, start_date_str):
             break
 
     if start_date_index == -1:
-        print('错误：未找到与data文件起始日期相符的净值信息！')
+        print('错误：未找到与data文件起始日期相符的净值信息！程序即将退出!')
+        exit(0)
 
     # print("抓取基金净值结束")
     return fund_info_dict_list[start_date_index:]
