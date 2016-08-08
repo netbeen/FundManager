@@ -3,24 +3,24 @@
 
 import os
 
-def loadPurchaseData():
 
+def loadPurchaseData():
     purchaseInfoDictListDict = {}
 
     if os.path.isdir('data'):
         fileList = os.listdir('data')
-        print('data文件：',fileList)
+        print('data文件：', fileList)
 
         for fileName in fileList:
             purchaseInfoDictList = []
-            purchaseInfoDictListDict[fileName] = purchaseInfoDictList 
-            fullFileName = 'data/'+fileName
+            purchaseInfoDictListDict[fileName] = purchaseInfoDictList
+            fullFileName = 'data/' + fileName
             inputFile = open(fullFileName)
             line = inputFile.readline()
             while line:
                 purchaseInfoDict = {}
                 line = line[:-1]
-                print('DEBUG:',line)
+                print('DEBUG:', line)
                 lineSplitList = line.split('\t')
                 purchaseInfoDict['dateString'] = lineSplitList[0]
                 purchaseInfoDict['totalPrice'] = float(lineSplitList[1])
