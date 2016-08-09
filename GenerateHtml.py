@@ -4,14 +4,11 @@
 
 def generate_html(fund_id_string, total_cost, profit_rate, fund_info_dict_list):
     template_file = open('template.html')
+
     html_content = template_file.read()
-
     html_content = html_content.replace('${fundID}', fund_id_string)
-
     html_content = html_content.replace('${totalCost}', '%.2f' % total_cost)
-
     html_content = html_content.replace('${currentProfitRate}', '%.2f' % (profit_rate * 100))
-
     html_content = html_content.replace('${totalValue}', '%.2f' % (total_cost * (profit_rate + 1)))
 
     dates_replace_string = ''
